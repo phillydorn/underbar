@@ -223,6 +223,16 @@
     });
 
     describe('uniq', function() {
+      _.uniq = function(array) {
+        var newArray = [];
+        for (var i = 0; i< array.length; i++) {
+          if (_.indexOf(newArray, array[i]) === -1) {
+            newArray.push(array[i]);
+          }
+        }
+        return newArray;
+      }
+
       it('should return all unique values contained in an unsorted array', function() {
         var numbers = [1, 2, 1, 3, 1, 4];
 
@@ -245,6 +255,15 @@
     });
 
     describe('map', function() {
+
+      _.map = function (collection, iterator) {
+        var mapArray = [];
+        for (var i = 0; i< collection.length; i++) {
+           mapArray.push(iterator(collection[i]));
+        }
+        return mapArray;
+      }
+
       it('should apply a function to every value in an array', function() {
         var doubledNumbers = _.map([1, 2, 3], function(num) {
           return num * 2;
@@ -286,6 +305,23 @@
     });
 
     describe('reduce', function() {
+
+      _.reduce = function(collection, iterator, accumulator) {
+       
+        var val, 
+            start = 0;
+
+        if (arguments.length < 3) {
+          accumulator = collection[0];
+          start = 1;
+        }
+        for (var i = start; i < collection.length; i++) {
+          accumulator = iterator(accumulator, collection[i]);
+        }
+
+        return accumulator;
+
+      }
       it('should be able to sum up an array', function() {
         var add = function(tally, item) {return tally + item; };
         var total = _.reduce([1, 2, 3], add, 0);
