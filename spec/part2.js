@@ -17,6 +17,46 @@
     });
 
     describe('every', function() {
+
+      _.every = function(collection, iterator) {
+       
+        var callbacks = true;
+
+        if (arguments.length < 2) {
+          callbacks = false;
+        }
+
+
+        if (collection.length === 0) { //returns true for an empty array
+            return true;
+        }
+        else {
+
+          var isEvery =  _.reduce (collection, function (test, item) {
+        
+          
+            if (!test) { // if one element fails, the whole test fails
+              return false;
+            }
+            else {
+              if (callbacks) {         // if there is a callback function, 
+               return iterator(item); // checks each element for truthiness
+              }
+              else {            //if there is no callback it just returns the value of each item in the array
+                return item;
+              }
+            }
+          },true);
+        }
+        if (isEvery == false) { // translates truthy and falsy values to booleans
+          return false;
+        }
+        else {
+          return true;
+        }
+
+      }
+
       var isEven = function(num) {
         return num % 2 === 0;
       };
