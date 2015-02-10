@@ -315,8 +315,16 @@
           accumulator = collection[0];
           start = 1;
         }
-        for (var i = start; i < collection.length; i++) {
-          accumulator = iterator(accumulator, collection[i]);
+        if (Array.isArray(collection)) {
+          for (var i = start; i < collection.length; i++) {
+            accumulator = iterator(accumulator, collection[i]);
+          }
+        }
+
+        else {
+          for (var i in collection) {
+            accumulator = iterator(accumulator, collection[i]);
+          }
         }
 
         return accumulator;
