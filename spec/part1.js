@@ -6,7 +6,12 @@
     describe('identity', function() {
       var uniqueObject = {};
 
+
       it('should return whatever value is passed into it', function() {
+
+      _.identity = function(val) {
+          return val;
+        };
         expect(_.identity(1)).to.equal(1);
         expect(_.identity('string')).to.equal('string');
         expect(_.identity(false)).to.be.false;
@@ -33,6 +38,10 @@
     });
 
     describe('last', function() {
+
+      _.last = function(array, n) {
+        return n === undefined ? array[array.length-1] : array.slice(Math.max(array.length-n,0), array.length);
+      };
       it('should pull the last element from an array', function() {
         expect(_.last([1,2,3])).to.equal(3);
       });
@@ -52,6 +61,24 @@
 
     describe('each', function() {
       it('should iterate over arrays, providing access to the element, index, and array itself', function() {
+
+      _.each = function(collection, iterator) {
+
+        var i;
+        if (Array.isArray(collection)) {
+          for (i = 0; i<collection.length; i++) {
+            iterator(collection[i], i, collection);
+          }
+        }
+        else {
+          for (i in collection) {
+            iterator(collection[i], i, collection);
+          }
+        }
+
+
+      } 
+
         var animals = ['ant', 'bat', 'cat'];
         var iterationInputs = [];
 
