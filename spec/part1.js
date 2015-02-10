@@ -153,6 +153,17 @@
     });
 
     describe('filter', function() {
+
+      _.filter = function (collection, test) {
+        var newArray=[];
+        for (var i = 0; i<collection.length; i++) {
+          if (test(collection[i])) {
+            newArray.push(collection[i]);
+          }
+        }
+        return newArray;
+
+      };
       it('should return all even numbers in an array', function() {
         var isEven = function(num) { return num % 2 === 0; };
         var evens = _.filter([1, 2, 3, 4, 5, 6], isEven);
@@ -177,6 +188,17 @@
     });
 
     describe('reject', function() {
+      _.reject = function (collection, test) {
+       var falseArray = [],
+          trueArray = _.filter (collection, test);
+       for (var i = 0; i< collection.length; i++) {
+        if (_.indexOf(trueArray, collection[i]) === -1) {
+          falseArray.push(collection[i]);
+        }
+       }
+       return falseArray;
+      };
+
       it('should reject all even numbers', function() {
         var isEven = function(num) { return num % 2 === 0; };
         var odds = _.reject([1, 2, 3, 4, 5, 6], isEven);
