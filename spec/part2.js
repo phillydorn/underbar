@@ -160,6 +160,20 @@
     });
 
     describe('extend', function() {
+
+      _.extend = function(obj) {
+        for (var i = 1; i< arguments.length; i++) { //makes sure to account for multiple sources
+          for (var j in arguments[i]) { // runs through each key in each argument
+            obj[j] = arguments[i][j]; //adds each key and value to the original object
+          
+          }
+          
+          
+        }
+
+        return obj;
+      }
+
       it('returns the first argument', function() {
         var to = {};
         var from = {};
@@ -206,6 +220,21 @@
     });
 
     describe('defaults', function() {
+
+      _.defaults = function(obj) {
+       for (var i = 1; i< arguments.length; i++) { //makes sure to account for multiple sources
+          for (var j in arguments[i]) { // runs through each key in each argument
+            if (!(j in obj)) { // conditional to make sure the key is not already in the object
+            obj[j] = arguments[i][j]; //adds each key and value to the original object
+            }
+
+          }
+          
+          
+        }
+
+        return obj;
+      }
       it('returns the first argument', function() {
         var to = {};
         var from = {};
