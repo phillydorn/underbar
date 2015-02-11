@@ -100,6 +100,21 @@
     });
 
     describe('some', function() {
+
+    _.some = function(collection, iterator) {
+      if (arguments.length < 2) { //default iterator if none is specified
+        iterator = _.identity;
+      }
+      var oppFunction = function (item) { return !iterator(item);}; // created a function to give the opposite
+                                                                    // of the result of the iterator function
+     
+      return  !_.every(collection, oppFunction); // then return the opposite of running _.every on that opposite function
+                                                  // If all the opposites are not false, then some must be true.
+
+
+    }
+
+
       var isEven = function(number){
         return number % 2 === 0;
       };
@@ -123,7 +138,7 @@
       it('should pass for a set containing one truthy value that is a string', function() {
         expect(_.some([null, 0, 'yes', false], _.identity)).to.be.true;
       });
-
+      
       it('should fail for a set containing no matching values', function() {
         expect(_.some([1, 11, 29], isEven)).to.be.false;
       });
