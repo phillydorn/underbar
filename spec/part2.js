@@ -362,10 +362,19 @@
 
       _.delay = function (func, wait) {
 
+        if (arguments.length > 2) {
+          var argsArray = [];
 
+          for (var i = 2; i<arguments.length; i++) {
+            argsArray.push(arguments[i]);
+          }
 
-        return setTimeout(func,wait,arguments);
+          return setTimeout(func.apply(this, argsArray), wait);
+        }
 
+        else {
+          return setTimeout(func, wait);
+        }
       
 
       }
