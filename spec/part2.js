@@ -293,6 +293,37 @@
     });
 
     describe('memoize', function() {
+
+      _.memoize = function (func) {
+        
+        var calledArguments = {}; // creates an object to keep track of which arguments the function has been called on
+     
+
+
+        return function () {
+
+          var args = Array.prototype.slice.call(arguments); // converts the "arguments" object to an array
+          var result;
+
+          if (!(args in calledArguments)) { 
+            
+           
+            result = func.apply(this, arguments); // if the function hasn't been called on the current array of
+            calledArguments[args] = result;       // arguments yet, it calls it and then adds those arguments as
+            return result;                      // keys to the object with the result as its value
+          }
+          
+          else{
+
+            return calledArguments[args]; // if it has already been called it just returns the previous value
+          }
+
+            
+
+        }
+
+      }
+      
       var add, memoAdd;
 
       beforeEach(function() {
