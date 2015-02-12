@@ -359,6 +359,16 @@
     });
 
     describe('delay', function() {
+
+      _.delay = function (func, wait) {
+
+
+
+        return setTimeout(func,wait,arguments);
+
+      
+
+      }
       var callback;
 
       beforeEach(function() {
