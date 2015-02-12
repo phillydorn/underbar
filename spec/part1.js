@@ -258,9 +258,11 @@
 
       _.map = function (collection, iterator) {
         var mapArray = [];
-        for (var i = 0; i< collection.length; i++) {
+
+       _.each(collection,function (element) { mapArray.push(iterator(element))}); //creates a new Array after invoking each
+        /*for (var i = 0; i< collection.length; i++) {
            mapArray.push(iterator(collection[i]));
-        }
+        }*/
         return mapArray;
       }
 
