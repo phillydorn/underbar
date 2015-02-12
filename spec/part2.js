@@ -404,6 +404,29 @@
     });
 
     describe('shuffle', function() {
+
+      _.shuffle = function (array) {
+        var shuffledArray = [],
+            elementsLeft = [],
+            pickIndex,
+            selected;
+
+        elementsLeft = array.slice(0);  //creates a copy of the array passed to not modify the original
+
+        while (elementsLeft.length>0) {
+         
+        pickIndex =  Math.floor(Math.random() * (elementsLeft.length)) // generates random index in the new array
+
+        selected = elementsLeft.splice(pickIndex,1); //pulls the selected element out of the new array
+
+        selected =  _.reduce(selected, _.identity); // tranforms the element from an array to a single value
+       
+        shuffledArray.push(selected); // adds it to the array to be returned
+
+        }
+        return shuffledArray;
+      }
+
       it('should not modify the original object', function() {
         var numbers = [4, 5, 6];
         var shuffled = _.shuffle(numbers).sort();
