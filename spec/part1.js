@@ -39,9 +39,7 @@
 
     describe('last', function() {
 
-      _.last = function(array, n) {
-        return n === undefined ? array[array.length-1] : array.slice(Math.max(array.length-n,0), array.length);
-      };
+     
       it('should pull the last element from an array', function() {
         expect(_.last([1,2,3])).to.equal(3);
       });
@@ -61,23 +59,6 @@
 
     describe('each', function() {
       it('should iterate over arrays, providing access to the element, index, and array itself', function() {
-
-      _.each = function(collection, iterator) {
-
-        var i;
-        if (Array.isArray(collection)) {
-          for (i = 0; i<collection.length; i++) {
-            iterator(collection[i], i, collection);
-          }
-        }
-        else {
-          for (i in collection) {
-            iterator(collection[i], i, collection);
-          }
-        }
-
-
-      } 
 
         var animals = ['ant', 'bat', 'cat'];
         var iterationInputs = [];
@@ -154,16 +135,7 @@
 
     describe('filter', function() {
 
-      _.filter = function (collection, test) {
-        var newArray=[];
-        for (var i = 0; i<collection.length; i++) {
-          if (test(collection[i])) {
-            newArray.push(collection[i]);
-          }
-        }
-        return newArray;
-
-      };
+     
       it('should return all even numbers in an array', function() {
         var isEven = function(num) { return num % 2 === 0; };
         var evens = _.filter([1, 2, 3, 4, 5, 6], isEven);
@@ -188,16 +160,7 @@
     });
 
     describe('reject', function() {
-      _.reject = function (collection, test) {
-       var falseArray = [],
-          trueArray = _.filter (collection, test);
-       for (var i = 0; i< collection.length; i++) {
-        if (_.indexOf(trueArray, collection[i]) === -1) {
-          falseArray.push(collection[i]);
-        }
-       }
-       return falseArray;
-      };
+    
 
       it('should reject all even numbers', function() {
         var isEven = function(num) { return num % 2 === 0; };
@@ -223,16 +186,7 @@
     });
 
     describe('uniq', function() {
-      _.uniq = function(array) {
-        var newArray = [];
-        for (var i = 0; i< array.length; i++) {
-          if (_.indexOf(newArray, array[i]) === -1) {
-            newArray.push(array[i]);
-          }
-        }
-        return newArray;
-      }
-
+     
       it('should return all unique values contained in an unsorted array', function() {
         var numbers = [1, 2, 1, 3, 1, 4];
 
@@ -256,15 +210,7 @@
 
     describe('map', function() {
 
-      _.map = function (collection, iterator) {
-        var mapArray = [];
-
-       _.each(collection,function (element) { mapArray.push(iterator(element))}); //creates a new Array after invoking each
-        /*for (var i = 0; i< collection.length; i++) {
-           mapArray.push(iterator(collection[i]));
-        }*/
-        return mapArray;
-      }
+      
 
       it('should apply a function to every value in an array', function() {
         var doubledNumbers = _.map([1, 2, 3], function(num) {
@@ -308,30 +254,7 @@
 
     describe('reduce', function() {
 
-      _.reduce = function(collection, iterator, accumulator) {
-       
-        var val, 
-            start = 0;
-
-        if (arguments.length < 3) {
-          accumulator = collection[0];
-          start = 1;
-        }
-        if (Array.isArray(collection)) {
-          for (var i = start; i < collection.length; i++) {
-            accumulator = iterator(accumulator, collection[i]);
-          }
-        }
-
-        else {
-          for (var i in collection) {
-            accumulator = iterator(accumulator, collection[i]);
-          }
-        }
-
-        return accumulator;
-
-      }
+     
       it('should be able to sum up an array', function() {
         var add = function(tally, item) {return tally + item; };
         var total = _.reduce([1, 2, 3], add, 0);
