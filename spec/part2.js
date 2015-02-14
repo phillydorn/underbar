@@ -18,44 +18,7 @@
 
     describe('every', function() {
 
-      _.every = function(collection, iterator) {
-       
-        var callbacks = true;
-
-        if (arguments.length < 2) {
-          callbacks = false;
-        }
-
-
-        if (collection.length === 0) { //returns true for an empty array
-            return true;
-        }
-        else {
-
-          var isEvery =  _.reduce (collection, function (test, item) {
-        
-          
-            if (!test) { // if one element fails, the whole test fails
-              return false;
-            }
-            else {
-              if (callbacks) {         // if there is a callback function, 
-               return iterator(item); // checks each element for truthiness
-              }
-              else {            //if there is no callback it just returns the value of each item in the array
-                return item;
-              }
-            }
-          },true);
-        }
-        if (isEvery == false) { // translates truthy and falsy values to booleans
-          return false;
-        }
-        else {
-          return true;
-        }
-
-      }
+      
 
       var isEven = function(num) {
         return num % 2 === 0;
@@ -101,18 +64,7 @@
 
     describe('some', function() {
 
-    _.some = function(collection, iterator) {
-      if (arguments.length < 2) { //default iterator if none is specified
-        iterator = _.identity;
-      }
-      var oppFunction = function (item) { return !iterator(item);}; // created a function to give the opposite
-                                                                    // of the result of the iterator function
-     
-      return  !_.every(collection, oppFunction); // then return the opposite of running _.every on that opposite function
-                                                  // If all the opposites are not false, then some must be true.
-
-
-    }
+   
 
 
       var isEven = function(number){
@@ -161,18 +113,7 @@
 
     describe('extend', function() {
 
-      _.extend = function(obj) {
-        for (var i = 1; i< arguments.length; i++) { //makes sure to account for multiple sources
-          for (var j in arguments[i]) { // runs through each key in each argument
-            obj[j] = arguments[i][j]; //adds each key and value to the original object
-          
-          }
-          
-          
-        }
-
-        return obj;
-      }
+      
 
       it('returns the first argument', function() {
         var to = {};
@@ -221,20 +162,7 @@
 
     describe('defaults', function() {
 
-      _.defaults = function(obj) {
-       for (var i = 1; i< arguments.length; i++) { //makes sure to account for multiple sources
-          for (var j in arguments[i]) { // runs through each key in each argument
-            if (!(j in obj)) { // conditional to make sure the key is not already in the object
-            obj[j] = arguments[i][j]; //adds each key and value to the original object
-            }
-
-          }
-          
-          
-        }
-
-        return obj;
-      }
+    
       it('returns the first argument', function() {
         var to = {};
         var from = {};
@@ -294,35 +222,7 @@
 
     describe('memoize', function() {
 
-      _.memoize = function (func) {
-        
-        var calledArguments = {}; // creates an object to keep track of which arguments the function has been called on
      
-
-
-        return function () {
-
-          var args = Array.prototype.slice.call(arguments); // converts the "arguments" object to an array
-          var result;
-
-          if (!(args in calledArguments)) { 
-            
-           
-            result = func.apply(this, arguments); // if the function hasn't been called on the current array of
-            calledArguments[args] = result;       // arguments yet, it calls it and then adds those arguments as
-            return result;                      // keys to the object with the result as its value
-          }
-          
-          else{
-
-            return calledArguments[args]; // if it has already been called it just returns the previous value
-          }
-
-            
-
-        }
-
-      }
       
       var add, memoAdd;
 
@@ -360,24 +260,7 @@
 
     describe('delay', function() {
 
-      _.delay = function (func, wait) {
-
-        if (arguments.length > 2) {
-          var argsArray = [];
-
-          for (var i = 2; i<arguments.length; i++) {
-            argsArray.push(arguments[i]);
-          }
-
-          return setTimeout(func.apply(this, argsArray), wait);
-        }
-
-        else {
-          return setTimeout(func, wait);
-        }
-      
-
-      }
+     
       var callback;
 
       beforeEach(function() {
@@ -405,27 +288,7 @@
 
     describe('shuffle', function() {
 
-      _.shuffle = function (array) {
-        var shuffledArray = [],
-            elementsLeft = [],
-            pickIndex,
-            selected;
-
-        elementsLeft = array.slice(0);  //creates a copy of the array passed to not modify the original
-
-        while (elementsLeft.length>0) {
-         
-        pickIndex =  Math.floor(Math.random() * (elementsLeft.length)) // generates random index in the new array
-
-        selected = elementsLeft.splice(pickIndex,1); //pulls the selected element out of the new array
-
-        selected =  _.reduce(selected, _.identity); // tranforms the element from an array to a single value
-       
-        shuffledArray.push(selected); // adds it to the array to be returned
-
-        }
-        return shuffledArray;
-      }
+     
 
       it('should not modify the original object', function() {
         var numbers = [4, 5, 6];
