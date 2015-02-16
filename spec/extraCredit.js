@@ -3,6 +3,9 @@
 
   describe('Extra Credit', function() {
     describe('invoke, when provided a function reference', function() {
+
+    
+
       it('runs the input function on each item in the array, and returns a list of results', function() {
         var reverse = function(){
           return this.split('').reverse().join('');
@@ -23,6 +26,44 @@
     });
 
     describe('sortBy', function() {
+
+      _.sortBy = function (collection, iterator) {
+        var mappedCollection = [],
+            mappedObjects = [],
+            sortString;
+
+            mappedCollection = _.map(collection, iterator);
+            
+            for (var i = 0; i< mappedCollection.length; i++) {
+              sortString = mappedCollection[i].toString();
+              mappedObjects[i] = {};
+              mappedObjects[i] ["sorter"] = sortString;
+              mappedObjects[i] ["original"] = collection[i];
+
+            }
+
+            function compareValues (a,b) {
+              debugger;
+              if (typeof(a["sorter"]) == "undefined") {
+                return 1;
+              }
+              else if (typeof(b["sorter"]) == "undefined") {
+                return -1;
+              }
+
+              else {
+
+              return a["sorter"] - b["sorter"];
+              }
+            }
+
+            mappedObjects.sort(compareValues);
+
+           return _.pluck(mappedObjects, "original");
+            
+
+      }
+
       it('should sort by age', function() {
         var people = [{name : 'curly', age : 50}, {name : 'moe', age : 30}];
         people = _.sortBy(people, function(person) {
