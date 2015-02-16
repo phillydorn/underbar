@@ -503,6 +503,53 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
+
+        var mappedCollection = [],
+            mappedObjects = [],
+            sortString;
+
+            mappedCollection = _.invoke(collection, iterator);
+
+
+
+            
+            /*for (var i = 0; i< mappedCollection.length; i++) {
+              sortString = mappedCollection[i].toString();
+              mappedObjects[i] = {};
+              mappedObjects[i] ["sorter"] = sortString;
+              mappedObjects[i] ["original"] = collection[i];
+
+            }*/
+
+            function sortByMap (a,b) {
+              var temp, mapTemp;
+
+              if (mappedCollection[a] > mappedCollection[b] ||
+                  mappedCollection[a] === undefined) {
+                mapTemp = mappedCollection[a];
+                temp = collection[a];
+                mappedCollection[a] = mappedCollection[b]
+                collection[a] = collection[b];
+                mappedCollection[b] = mapTemp;
+                collection[b] = temp;
+              }
+            }
+
+            for (var i = 0; i< mappedCollection.length; i++) {
+              for (var j = i+1; j<mappedCollection.length; j++) {
+                sortByMap(i,j);
+              }
+            }
+            
+            
+
+            
+
+           return collection;
+            
+
+      
+
   };
 
   // Zip together two or more arrays with elements of the same index
@@ -510,7 +557,20 @@
   //
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
-  _.zip = function() {
+    _.zip = function() {
+
+    var lengths = _.map(arguments, function(arg) {return arg.length}),
+      longestArray = _.indexOf(lengths, Math.max.apply(this, lengths)),
+        result = [];
+
+        for (var i = 0; i<arguments[longestArray].length; i++) {
+          var zipped = [];
+            for (var j = 0; j<arguments.length; j++) {
+              zipped.push(arguments[j][i]);
+            }
+            result.push(zipped);
+        }
+        return result;
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.

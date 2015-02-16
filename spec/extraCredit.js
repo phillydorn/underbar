@@ -27,42 +27,7 @@
 
     describe('sortBy', function() {
 
-      _.sortBy = function (collection, iterator) {
-        var mappedCollection = [],
-            mappedObjects = [],
-            sortString;
-
-            mappedCollection = _.map(collection, iterator);
-            
-            for (var i = 0; i< mappedCollection.length; i++) {
-              sortString = mappedCollection[i].toString();
-              mappedObjects[i] = {};
-              mappedObjects[i] ["sorter"] = sortString;
-              mappedObjects[i] ["original"] = collection[i];
-
-            }
-
-            function compareValues (a,b) {
-              debugger;
-              if (typeof(a["sorter"]) == "undefined") {
-                return 1;
-              }
-              else if (typeof(b["sorter"]) == "undefined") {
-                return -1;
-              }
-
-              else {
-
-              return a["sorter"] - b["sorter"];
-              }
-            }
-
-            mappedObjects.sort(compareValues);
-
-           return _.pluck(mappedObjects, "original");
-            
-
-      }
+      
 
       it('should sort by age', function() {
         var people = [{name : 'curly', age : 50}, {name : 'moe', age : 30}];
