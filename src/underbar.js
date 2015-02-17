@@ -581,23 +581,23 @@
     var flattened, x = [];
 
 
-    var nestFlatten = 
-    flattened = _.reduce(nestedArray, function (collection, element) {
+    var nestFlatten;
+    flattened = _.reduce(nestedArray, function (accumulator, element) {
       if (!Array.isArray(element)) {
-        x.push(element);
+        accumulator.push(element);
 
       }
       else {
-          _.flatten(element);
-          for (var i = 0; i<element.length; i++) {
-            
-            x.push(element[i]);
+          nestFlatten = _.flatten(element);
+           _.each(nestFlatten, function (nestedItem) {
+            accumulator.push(nestedItem);
+          });
            
        }   
-          
+          return accumulator;
         
-      }
-      return x;
+      
+      
     }, x);
     return flattened;
   };
