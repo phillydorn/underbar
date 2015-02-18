@@ -606,7 +606,7 @@
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
     var argZero = arguments[0],
-        arrays = arguments,
+        arrays = Array.prototype.slice.call(arguments),
         result = [];
 
     _.each(argZero, function (zeroElement) {
@@ -626,7 +626,40 @@
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    
+    var result = [];
+    var args = Array.prototype.slice.call(arguments,1);
+
+    var args = _.flatten (args);
+
+   
+
+    _.each(array, function (element) {
+      if (!_.contains (args, element)) {
+        result.push(element);
+      }
+   
+
+    });
+    return result;
   };
+
+
+    /*var result = array;
+    var otherArrays =[];
+
+    _.each(arguments, function (otherArray) {
+      otherArrays.push(otherArray);
+    };
+
+    otherArrays.shift();
+
+    _.each(array, function (element) {
+
+      _.every(otherArrays, function ())
+    });
+
+  };*/
 
   // Returns a function, that, when invoked, will only be triggered at most once
   // during a given window of time.  See the Underbar readme for extra details
