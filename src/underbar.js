@@ -508,19 +508,20 @@
             mappedObjects = [],
             sortString;
 
-            mappedCollection = _.invoke(collection, iterator);
 
+            if (!!collection[iterator]) {
+              mappedCollection = _.map(collection, function (element) {
+                return element[iterator];
+
+              });
+            }
+
+            else {
+              mappedCollection = _.map(collection, iterator);
+            }
 
 
             
-            /*for (var i = 0; i< mappedCollection.length; i++) {
-              sortString = mappedCollection[i].toString();
-              mappedObjects[i] = {};
-              mappedObjects[i] ["sorter"] = sortString;
-              mappedObjects[i] ["original"] = collection[i];
-
-            }*/
-
             function sortByMap (a,b) {
               var temp, mapTemp;
 
@@ -645,27 +646,23 @@
   };
 
 
-    /*var result = array;
-    var otherArrays =[];
-
-    _.each(arguments, function (otherArray) {
-      otherArrays.push(otherArray);
-    };
-
-    otherArrays.shift();
-
-    _.each(array, function (element) {
-
-      _.every(otherArrays, function ())
-    });
-
-  };*/
-
   // Returns a function, that, when invoked, will only be triggered at most once
   // during a given window of time.  See the Underbar readme for extra details
   // on this function.
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+
+    return function() {
+      var callTime = new Date();
+      if (callTime - lastCall > wait) {
+        func();
+        lastCall = callTime;
+      }
+      else {
+        _.delay(func, wait-callTime-lastCall);
+      }
+      
+    };
   };
 }());
