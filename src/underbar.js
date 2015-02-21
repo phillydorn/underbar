@@ -652,17 +652,20 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
-
+    var lastCall = new Date(0);
     return function() {
-      var callTime = new Date();
-      if (callTime - lastCall > wait) {
+      var callTime = Date.now();
+      
+
+     if (callTime - lastCall > wait) {
         func();
         lastCall = callTime;
       }
       else {
         _.delay(func, wait-callTime-lastCall);
       }
-      
+
+      }
     };
-  };
+  
 }());
